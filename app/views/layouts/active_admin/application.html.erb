@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
+  <!-- Load Active Admin CSS from CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/activeadmin@3.4.0/dist/activeadmin.min.css">
+  
+  <!-- Load Active Admin JS from CDN (optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/activeadmin@3.4.0/dist/activeadmin.min.js"></script>
+  
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <h1><%= link_to "Customer CRM", admin_dashboard_path %></h1>
+      <div id="utility_nav">
+        <% if current_admin_user %>
+          <%= link_to "Logout", destroy_admin_user_session_path, method: :delete %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div id="title_bar">
+      <h2 id="page_title"><%= yield :title %></h2>
+    </div>
+    
+    <div id="active_admin_content">
+      <div id="main_content_wrapper">
+        <div id="main_content">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    
+    <div id="footer">
+      <p>Customer CRM</p>
+    </div>
+  </div>
+</body>
+</html>
+

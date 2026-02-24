@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
+  <!-- Load Active Admin CSS from CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/activeadmin@3.4.0/dist/activeadmin.min.css">
+  
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+<body>
+  <div class="active_admin">
+    <%= yield %>
+  </div>
+</body>
+</html>
+
