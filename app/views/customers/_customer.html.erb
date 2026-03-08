@@ -1,0 +1,20 @@
+<div class="customer-card">
+  <div class="customer-image">
+    <% if customer.has_image? %>
+      <% begin %>
+        <%= image_tag customer.image, size: "100x100", style: "object-fit: cover;" %>
+      <% rescue %>
+        <%= image_tag "https://via.placeholder.com/100", size: "100x100" %>
+      <% end %>
+    <% else %>
+      <%= image_tag "https://via.placeholder.com/100", size: "100x100" %>
+    <% end %>
+  </div>
+  <div class="customer-info">
+    <h3><%= customer.full_name %></h3>
+    <p><strong>Phone:</strong> <%= customer.phone_number %></p>
+    <p><strong>Email:</strong> <%= customer.email_address.presence || "N/A" %></p>
+    <p><strong>Notes:</strong> <%= customer.notes %></p>
+  </div>
+</div>
+

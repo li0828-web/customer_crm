@@ -1,0 +1,16 @@
+<h1>Customer CRM</h1>
+
+<div class="navigation">
+  <%= link_to "All Customers", root_path %>
+  <%= link_to "Alphabetized", alphabetized_customers_path %>
+  <%= link_to "Missing Email", missing_email_customers_path %>
+</div>
+
+<div class="customer-list">
+  <% if @customers.any? %>
+    <%= render @customers %>
+  <% else %>
+    <p>No customers found. Please add some customers in the <a href="/admin">admin panel</a>.</p>
+  <% end %>
+</div>
+
