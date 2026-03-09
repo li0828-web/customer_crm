@@ -8,24 +8,6 @@ ActiveAdmin.register Customer do
     column :full_name
     column :phone_number
     column :email_address
-
-    column "Image" do |customer|
-      if customer.image.attached?
-        begin
-          # Generate URL safely
-          url = Rails.application.routes.url_helpers.rails_representation_url(
-            customer.image.variant(resize_to_limit: [50, 50]).processed,
-            only_path: true
-          )
-          image_tag url, style: "object-fit: cover; border-radius: 4px; width: 50px; height: 50px;"
-        rescue
-          image_tag "https://via.placeholder.com/50", size: "50x50"
-        end
-      else
-        image_tag "https://via.placeholder.com/50", size: "50x50"
-      end
-    end
-
     column :created_at
     actions
   end
@@ -36,10 +18,7 @@ ActiveAdmin.register Customer do
       f.input :phone_number
       f.input :email_address
       f.input :notes
-      f.input :image, as: :file, 
-                hint: f.object.image.attached? ? 
-                  "Current: #{image_tag f.object.image.variant(resize_to_limit: [50, 50])}".html_safe : 
-                  "Upload a customer photo"
+      f.input :image, as: :file
     end
     f.actions
   end
@@ -51,11 +30,19 @@ ActiveAdmin.register Customer do
       row :email_address
       row :notes
       
+      # 直接在这里使用 helper 方法，不需要显式包含
       row "Image" do |customer|
+        # 调用 helper 方法
         if customer.image.attached?
-          image_tag customer.image.variant(resize_to_limit: [200, 200])
+          begin
+            image_url = rails_blob_path(customer.image, only_path: true)
+            image_tag image_url, size: "200x200", 
+                      style: "object-fit: cover; border-radius: 8px; max-width: 200px; max-height: 200px;"
+          rescue
+            image_tag "https://via.placeholder.com/200x200?text=No+Image", size: "200x200"
+          end
         else
-          image_tag "https://via.placeholder.com/200"
+          image_tag "https://via.placeholder.com/200x200?text=No+Image", size: "200x200"
         end
       end
       
